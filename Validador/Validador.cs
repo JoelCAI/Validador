@@ -41,6 +41,96 @@ namespace Validador
 
         }
 
+        public static int PedirIntEliminarPorRegistro(string mensaje)
+        {
+            /* la salida de esta funcion estará en la variable int valor */
+            string mensError = "\n Recuerde que ingreso a la opción eliminar por Número de Registro.\n" +
+                               "\n Por favor ingrese el valor solicitado y el Sistema continuará" +
+                               "\n Debe ingresar un valor que no sea vacio y que ese valor sea un número. ";
+
+            int valor;
+
+            Console.WriteLine(mensaje);
+
+            if (!int.TryParse(Console.ReadLine(), out valor))
+            {
+                Console.Clear();
+                Console.WriteLine(mensError);
+
+                return PedirIntEliminarPorRegistro(mensaje);
+            }
+            else
+                return valor;
+
+        }
+
+        /* COMPARAR DOS NUMEROS ENTEROS */
+        public static int PedirIntComparar(string mensaje, int numeroAnterior)
+        {
+            /* la salida de esta funcion estará en la variable int valor */
+            string mensError = "\n\n Por favor ingrese el valor solicitado" +
+                               "\n Debe ingresar un valor que no sea vacio y que ese valor sea mayor al número anterior " +
+                               "ingresado. ";
+
+
+            int valor;
+            string cadena;
+            Console.WriteLine(mensaje);
+            Console.WriteLine(" El número anterior que ingreso es: " + numeroAnterior);
+            cadena = Console.ReadLine();
+
+            if (!int.TryParse(cadena, out valor))
+            {
+                Console.Clear();
+                Console.WriteLine(mensError);
+                return PedirIntComparar(mensaje, numeroAnterior);
+            }
+
+            int numero;
+            bool ok = int.TryParse(cadena, out numero);
+            if (numeroAnterior >= numero)
+            {
+                Console.Clear();
+                Console.WriteLine(mensError);
+                return PedirIntComparar(mensaje, numeroAnterior);
+            }
+            else
+                return valor;
+        }
+
+        public static void CompararStringConNumeroInt(string str1)
+        {
+            string opcion = str1.Replace('.', ',');
+
+            int nuevoUno;
+
+            bool ok = int.TryParse(opcion, out nuevoUno);
+
+            decimal numeroDos;
+
+            bool okDos = decimal.TryParse(opcion, out numeroDos);
+
+
+            if (ok)
+            {
+                Console.WriteLine("\n La cadena" + " *" + str1 + "*" + " Es un número Entero y es: " + "*" + nuevoUno + "*");
+
+            }
+            else if (okDos)
+            {
+                Console.WriteLine("\n La cadena" + " *" + str1 + "*" + " Es un número decimal " + "*" + numeroDos + "*"
+                                  + " pero no un número entero");
+            }
+
+            else
+            {
+
+                Console.WriteLine("\n La cadena" + " *" + str1 + "*" + " NO es un número ");
+                Console.WriteLine("\n Recuerde ingresar un valor numérico si desea que el Sistema lo tome en cuenta");
+
+            }
+        }
+
         public static string PedirString(string mensaje)
         {
             string valor;
@@ -67,6 +157,37 @@ namespace Validador
 
         }
 
+        public static string ValidarStringNoVacioUsuarioClave(string mensaje)
+        {
+
+            string opcion;
+            bool valido = false;
+            string mensajeValidador = "\n Puede ser combinación de minúsculas, MAYÚSCULAS y caracteres";
+            string mensajeError = "\n Por favor ingrese un valor no vacio para que pueda continuar. ";
+
+            do
+            {
+
+                Console.WriteLine(mensaje);
+                Console.WriteLine(mensajeValidador);
+
+                opcion = Console.ReadLine();
+
+                if (opcion == "")
+                {
+                    Console.Clear();
+                    Console.WriteLine("\n");
+                    Console.WriteLine(mensajeError);
+                }
+                else
+                {
+                    valido = true;
+                }
+
+            } while (!valido);
+
+            return opcion;
+        }
         public static string ValidarStringSioNo(string mensaje)
         {
 
@@ -157,6 +278,51 @@ namespace Validador
 
 
             return valor;
+
+        }
+
+
+        public static void CompararIgualdadStringSinImportarMayusculaMinuscula(string str1, string str2)
+        {
+            string nuevoUno = str1.ToUpper();
+            string nuevoDos = str2.ToUpper();
+
+            bool comparacion = nuevoUno.Equals(nuevoDos);
+
+            if (comparacion == true)
+            {
+                Console.WriteLine("\n La cadena" + " *" + str1 + "*" + " SI tiene el mismo valor que la cadena " + "*" + str2 + "*");
+            }
+            else
+            {
+
+                Console.WriteLine("\n La cadena" + " *" + str1 + "*" + " NO tiene el mismo valor que la cadena " + "*" + str2 + "*");
+            }
+        }
+
+        public static void CompararIgualdadString(string str1, string str2)
+        {
+
+            bool comparacion = str1.Equals(str2);
+
+            if (comparacion == true)
+            {
+                Console.WriteLine("\n La cadena" + " *" + str1 + "*" + " SI tiene el mismo valor que la cadena " + "*" + str2 + "*");
+            }
+            else
+            {
+
+                Console.WriteLine("\n La cadena" + " *" + str1 + "*" + " NO tiene el mismo valor que la cadena " + "*" + str2 + "*");
+            }
+        }
+
+
+        public static void VocalTildada(string cadena)
+        {
+
+            string opcion = cadena.Replace('á', 'a').Replace('é', 'e').Replace('í', 'i').Replace('ó', 'o').Replace('ú', 'u');
+
+            Console.WriteLine("\n Usted escribio " + "*" + cadena + "*" + "\n\n Ahora su frase es: " + "*" + opcion + "*");
 
         }
 
@@ -324,116 +490,8 @@ namespace Validador
         }
 
 
-        /* COMPARAR DOS NUMEROS ENTEROS */
-        public static int PedirIntComparar(string mensaje, int numeroAnterior)
-        {
-            /* la salida de esta funcion estará en la variable int valor */
-            string mensError = "\n\n Por favor ingrese el valor solicitado" +
-                               "\n Debe ingresar un valor que no sea vacio y que ese valor sea mayor al número anterior " +
-                               "ingresado. ";
+        
 
-
-            int valor;
-            string cadena;
-            Console.WriteLine(mensaje);
-            Console.WriteLine(" El número anterior que ingreso es: " + numeroAnterior);
-            cadena = Console.ReadLine();
-
-            if (!int.TryParse(cadena, out valor))
-            {
-                Console.Clear();
-                Console.WriteLine(mensError);
-                return PedirIntComparar(mensaje, numeroAnterior);
-            }
-
-            int numero;
-            bool ok = int.TryParse(cadena, out numero);
-            if (numeroAnterior >= numero)
-            {
-                Console.Clear();
-                Console.WriteLine(mensError);
-                return PedirIntComparar(mensaje, numeroAnterior);
-            }
-            else
-                return valor;
-        }
-
-        public static void CompararStringConNumeroInt(string str1)
-        {
-            string opcion = str1.Replace('.', ',');
-
-            int nuevoUno;
-
-            bool ok = int.TryParse(opcion, out nuevoUno);
-
-            decimal numeroDos;
-
-            bool okDos = decimal.TryParse(opcion, out numeroDos);
-
-
-            if (ok)
-            {
-                Console.WriteLine("\n La cadena" + " *" + str1 + "*" + " Es un número Entero y es: " + "*" + nuevoUno + "*");
-
-            }
-            else if (okDos)
-            {
-                Console.WriteLine("\n La cadena" + " *" + str1 + "*" + " Es un número decimal " + "*" + numeroDos + "*"
-                                  + " pero no un número entero");
-            }
-
-            else
-            {
-
-                Console.WriteLine("\n La cadena" + " *" + str1 + "*" + " NO es un número ");
-                Console.WriteLine("\n Recuerde ingresar un valor numérico si desea que el Sistema lo tome en cuenta");
-
-            }
-        }
-
-        public static void CompararIgualdadStringSinImportarMayusculaMinuscula(string str1, string str2)
-        {
-            string nuevoUno = str1.ToUpper();
-            string nuevoDos = str2.ToUpper();
-
-            bool comparacion = nuevoUno.Equals(nuevoDos);
-
-            if (comparacion == true)
-            {
-                Console.WriteLine("\n La cadena" + " *" + str1 + "*" + " SI tiene el mismo valor que la cadena " + "*" + str2 + "*");
-            }
-            else
-            {
-
-                Console.WriteLine("\n La cadena" + " *" + str1 + "*" + " NO tiene el mismo valor que la cadena " + "*" + str2 + "*");
-            }
-        }
-
-        public static void CompararIgualdadString(string str1, string str2)
-        {
-
-            bool comparacion = str1.Equals(str2);
-
-            if (comparacion == true)
-            {
-                Console.WriteLine("\n La cadena" + " *" + str1 + "*" + " SI tiene el mismo valor que la cadena " + "*" + str2 + "*");
-            }
-            else
-            {
-
-                Console.WriteLine("\n La cadena" + " *" + str1 + "*" + " NO tiene el mismo valor que la cadena " + "*" + str2 + "*");
-            }
-        }
-
-
-        public static void VocalTildada(string cadena)
-        {
-
-            string opcion = cadena.Replace('á', 'a').Replace('é', 'e').Replace('í', 'i').Replace('ó', 'o').Replace('ú', 'u');
-
-            Console.WriteLine("\n Usted escribio " + "*" + cadena + "*" + "\n\n Ahora su frase es: " + "*" + opcion + "*");
-
-        }
 
         public static void TeclaControlG()
         {
